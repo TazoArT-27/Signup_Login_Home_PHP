@@ -1,4 +1,8 @@
 <?php
+  // $server = "sql310.epizy.com";
+  // $user ="epiz_26532098";
+  // $password = "NGc1UefxGBO";
+  // $db = "epiz_26532098_userlogin";
   $server = "localhost";
   $user ="root";
   $password = "";

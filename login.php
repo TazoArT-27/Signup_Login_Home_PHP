@@ -1,5 +1,6 @@
 <?php
   session_start();
+  ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,12 +35,28 @@
         $pass_decode = password_verify($password, $db_pass);
 
         if($pass_decode){
-            ?>
+
+            if(isset($_POST['rememberme'])){
+
+                setcookie("emailcookie",$email,time()+86400);
+                setcookie("passwordcookie",$password,time()+86400);
+
+                ?>
+                <script>
+                    alert("login successful");
+
+                    location.replace('home.php');
+                </script>
+                <?php
+            }else{
+                ?>
                 <script>
                     alert("login successful");
                     location.replace('home.php');
                 </script>
-           <?php
+                <?php
+            }
+            
         }else{
             ?>
                 <script>
@@ -77,13 +94,16 @@
                     <div class="input-group-prepend">
                          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                     </div>
-                    <input type="email" class="form-control" name="email" placeholder="Email address" required>
+                    <input type="email" class="form-control" name="email" placeholder="Email address" value="<?php if(isset($_COOKIE['emailcookie'])){ echo $_COOKIE['emailcookie']; } ?>" required>
                </div>
                <div class="form-group input-group">
                     <div class="input-group-prepend">
                          <span class="input-group-text"><i class="fa fa-lock"></i></span>
                     </div>
-                    <input type="password" class="form-control" name="password" placeholder="Enter password" value="" required>
+                    <input type="password" class="form-control" name="password" placeholder="Enter password" value="<?php if(isset($_COOKIE['passwordcookie'])){ echo $_COOKIE['passwordcookie']; } ?>" required>
+               </div>
+               <div class="form-group">
+                    <input type="checkbox" name="rememberme" value="" required>Remember me
                </div>
                <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit" name="submit" >Login Now</button>
